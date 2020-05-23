@@ -1,0 +1,10 @@
+/aoba-home/*
+!/aoba-home/resources
+!/aoba-home/src
+!/aoba-home/.dir-locals.el
+!/aoba-home/README.md
+!/aoba-home/project.clj
+!/aoba-home/karma.conf.js
+!/aoba-home/package-lock.json
+!/aoba-home/package.json
+!/aoba-home/project.clj
