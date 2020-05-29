@@ -2,4 +2,5 @@
 
 (def default-db
   {:name          "re-frame"
-   :service-fold? false})
+   :service-fold? false
+   :sns-fold?     false})

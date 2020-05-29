@@ -25,7 +25,8 @@
 (defn home-title []
   [re-com/title
    :label "aoba17"
-   :level :level1])
+   :level :level1
+   :class "unselectable"])
 
 (defn url-link
   ""
@@ -41,12 +42,15 @@
   [name url techs]
   [re-com/v-box
    :gap "0.4em"
-   :class "work-panel"
-   :children [[url-link
-               url
-               [re-com/title
-                :label name
-                :level :level3]]
+   :children [[re-com/h-box
+               :align :center
+               :gap "3px"
+               :children [[:i.fas.fa-circle]
+                          [url-link
+                           url
+                           [re-com/title
+                            :label name
+                            :level :level3]]]]
               [re-com/p {:class "description"}
                "This space is for the descriptions of the app."
                br
@@ -59,11 +63,12 @@
   [label fold? toggle-key]
   [re-com/h-box
    :align :center
+   :class "unselectable"
+   :attr {:on-click #(re-frame/dispatch [::events/toggle toggle-key])}
    :children [[:i.fas.fa-2x
-               {:on-click #(re-frame/dispatch [::events/toggle toggle-key])
-                :class    (if @fold?
-                            "fa-caret-right"
-                            "fa-caret-down")}]
+               {:class (if @fold?
+                         "fa-caret-right"
+                         "fa-caret-down")}]
               [re-com/title
                :label label
                :level :level2
@@ -72,7 +77,7 @@
 (defn services
   ""
   []
-  [:div
+  [:div.contents-box
    [work-panel
     "ジェネラティブガチャガチャシミュレーター"
     "https://www.genegacha.com"
@@ -82,14 +87,29 @@
     "https://av.genegacha.com"
     dmm-gacha-techs]])
 
+(defn sns-accounts
+  ""
+  []
+  [re-com/h-box
+   :class "contents-box"
+   :gap "0.5em"
+   :children [[url-link "https://twitter.com/takafumi_oy" [:i.fab.fa-twitter.fa-3x]]
+              [url-link "https://github.com/aoba17" [:i.fab.fa-github.fa-3x]]
+              [url-link "https://www.instagram.com/dope_oyakata/" [:i.fab.fa-instagram.fa-3x]]
+              ;;[:i.fab.fa-youtube.fa-3x]
+              ]])
+
 (defn home-panel []
-  (let [service-fold? (re-frame/subscribe [::subs/any-key :service-fold?])]
+  (let [service-fold? (re-frame/subscribe [::subs/any-key :service-fold?])
+        sns-fold?     (re-frame/subscribe [::subs/any-key :sns-fold?])]
     [re-com/v-box
      :gap "1em"
      :class "home-panel"
      :children [[home-title]
-                [headline "公開中のサービス" service-fold? :service-fold?]
-                (if-not @service-fold? [services])]]))
+                [headline "My work on the Web" service-fold? :service-fold?]
+                (if-not @service-fold? [services])
+                [headline "aoba17 official" sns-fold? :sns-fold?]
+                (if-not @sns-fold? [sns-accounts])]]))
 
 
 ;; about
