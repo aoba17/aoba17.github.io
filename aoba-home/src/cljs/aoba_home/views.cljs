@@ -3,6 +3,7 @@
    [re-frame.core :as re-frame]
    [re-com.core :as re-com]
    [aoba-home.subs :as subs]
+   [aoba-home.events :as events]
    ))
 
 
@@ -55,29 +56,40 @@
 
 (defn headline
   ""
-  [label]
+  [label fold? toggle-key]
   [re-com/h-box
    :align :center
-   :children [[:i.fas.fa-caret-right.fa-2x]
+   :children [[:i.fas.fa-2x
+               {:on-click #(re-frame/dispatch [::events/toggle toggle-key])
+                :class    (if @fold?
+                            "fa-caret-right"
+                            "fa-caret-down")}]
               [re-com/title
                :label label
                :level :level2
                :class "headline"]]])
 
+(defn services
+  ""
+  []
+  [:div
+   [work-panel
+    "ジェネラティブガチャガチャシミュレーター"
+    "https://www.genegacha.com"
+    genegacha-techs]
+   [work-panel
+    "出会って4秒でサンプル動画"
+    "https://av.genegacha.com"
+    dmm-gacha-techs]])
+
 (defn home-panel []
-  [re-com/v-box
-   :gap "1em"
-   :class "home-panel"
-   :children [[home-title]
-              [headline "公開中のサービス"]
-              [work-panel
-               "ジェネラティブガチャガチャシミュレーター"
-               "https://www.genegacha.com"
-               genegacha-techs]
-              [work-panel
-               "出会って4秒でサンプル動画"
-               "https://av.genegacha.com"
-               dmm-gacha-techs]]])
+  (let [service-fold? (re-frame/subscribe [::subs/any-key :service-fold?])]
+    [re-com/v-box
+     :gap "1em"
+     :class "home-panel"
+     :children [[home-title]
+                [headline "公開中のサービス" service-fold? :service-fold?]
+                (if-not @service-fold? [services])]]))
 
 
 ;; about
@@ -103,12 +115,9 @@
 
 (defn- panels [panel-name]
   (case panel-name
-    :home-panel [home-panel]
+    :home-panel  [home-panel]
     :about-panel [about-panel]
     [:div]))
-
-(defn show-panel [panel-name]
-  [panels panel-name])
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]

@@ -6,11 +6,16 @@
    ))
 
 (re-frame/reg-event-db
- ::initialize-db
- (fn-traced [_ _]
-   db/default-db))
+  ::initialize-db
+  (fn-traced [_ _]
+             db/default-db))
 
 (re-frame/reg-event-db
- ::set-active-panel
- (fn-traced [db [_ active-panel]]
-   (assoc db :active-panel active-panel)))
+  ::set-active-panel
+  (fn-traced [db [_ active-panel]]
+             (assoc db :active-panel active-panel)))
+
+(re-frame/reg-event-db
+  ::toggle
+  (fn [db [_ flag]]
+    (assoc db flag (not (flag db)))))
