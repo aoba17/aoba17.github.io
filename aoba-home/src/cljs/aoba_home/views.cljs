@@ -9,18 +9,45 @@
 
 ;; home
 
-(def clojure-official {:url "https://clojure.org/" :name "Clojure"})
-(def clojurescript-official {:url "https://clojurescript.org/" :name "ClojureScript"})
-(def re-frame-official {:url "https://day8.github.io/re-frame/" :name "re-frame"})
-(def genegacha-techs [clojurescript-official
-                      re-frame-official
-                      {:url "http://quil.info/" :name "Quil"}])
-(def dmm-gacha-techs [clojure-official
-                      clojurescript-official
-                      re-frame-official
-                      {:url "https://github.com/ring-clojure/ring" :name "Ring"}
-                      {:url "https://affiliate.dmm.com/api/" :name "DMM Webサービス"}])
-(def br [:br])
+(def clojure-official
+  {:url "https://clojure.org/" :name "Clojure"})
+
+(def clojurescript-official
+  {:url "https://clojurescript.org/" :name "ClojureScript"})
+
+(def re-frame-official
+  {:url "https://day8.github.io/re-frame/" :name "re-frame"})
+
+(def genegacha-techs
+  [clojurescript-official
+   re-frame-official
+   {:url "http://quil.info/" :name "Quil"}])
+
+(def dmm-gacha-techs
+  [clojure-official
+   clojurescript-official
+   re-frame-official
+   {:url "https://github.com/ring-clojure/ring" :name "Ring"}
+   {:url "https://affiliate.dmm.com/api/" :name "DMM Webサービス"}])
+
+(def genegacha-desc
+  "aoba17が作成したジェネラティブアートが楽しめるガチャガチャのシミュレーター。ただただガチャを回したい人向け。美少女イラストや課金要素はないです。")
+
+(def dmm-desc
+  "エロサイトです。FANZAのアダルトビデオのサンプル動画が楽しめます。サンプル動画はすべてFANZA提供のアフィリエイト広告なので違法性ゼロ!!")
+
+(def work-list
+  [{:title       "ジェネラティブガチャガチャシミュレーター"
+    :url         "https://www.genegacha.com"
+    :description genegacha-desc
+    :techs       genegacha-techs}
+   {:title       "出会って4秒でサンプル動画"
+    :url         "https://av.genegacha.com"
+    :description dmm-desc
+    :techs       dmm-gacha-techs}])
+
+(def br
+  [:br])
 
 (defn home-title []
   [re-com/title
@@ -39,7 +66,7 @@
 
 (defn work-panel
   ""
-  [name url techs]
+  [name url description techs]
   [re-com/v-box
    :gap "0.4em"
    :children [[re-com/h-box
@@ -52,7 +79,7 @@
                             :label name
                             :level :level3]]]]
               [re-com/p {:class "description"}
-               "This space is for the descriptions of the app."
+               description
                br
                "Techs :"
                (for [{:keys [url name]} techs]
@@ -78,14 +105,8 @@
   ""
   []
   [:div.contents-box
-   [work-panel
-    "ジェネラティブガチャガチャシミュレーター"
-    "https://www.genegacha.com"
-    genegacha-techs]
-   [work-panel
-    "出会って4秒でサンプル動画"
-    "https://av.genegacha.com"
-    dmm-gacha-techs]])
+   (for [{:keys [title url description techs]} work-list]
+     [work-panel title url description techs])])
 
 (defn sns-accounts
   ""
