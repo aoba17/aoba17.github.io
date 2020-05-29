@@ -1,10 +1,19 @@
-p span {
-  margin-left: 0.7em;
+body {
+  background-color: FloralWhite;
 }
 
-i {
-  padding-top: 0.4em;
-  padding-left: 0.3em;
+.level3 {
+  color: DarkOliveGreen;
+}
+
+p {
+  border-left: solid;
+  border-color: DarkOrange;
+  padding-left: 1em;
+}
+
+p span {
+  margin-left: 0.7em;
 }
 
 .home-panel {
@@ -15,10 +24,42 @@ i {
   margin-left: 0.5em;
 }
 
-.work-panel {
+.contents-box {
   margin-left: 3em;
 }
 
 .description {
   margin-left: 0.5em;
+}
+
+.unselectable {
+  user-select: none;
+}
+
+.unselectable i {
+  padding-top: 8px;
+  padding-left: 8px;
+}
+
+.unselectable i.fa-caret-right {
+  padding-left: 15px;
+  color: Orange;
+}
+
+.unselectable i.fa-caret-down {
+  color: Tomato;
+}
+
+a, a:hover {
+  color: DarkOliveGreen;
+}
+
+a i, a:hover i {
+  color: DarkSlateGrey;
+}
+
+i.fas.fa-circle, i.fas.fa-circle:hover {
+  margin-top: 3.7px;
+  margin-left: 2px;
+  color: YellowGreen;
 }
