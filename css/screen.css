@@ -12,7 +12,7 @@ p {
   padding-left: 1em;
 }
 
-p span {
+p span.url {
   margin-left: 0.7em;
 }
 
