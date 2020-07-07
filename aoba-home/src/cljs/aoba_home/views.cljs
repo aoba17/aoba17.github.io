@@ -30,21 +30,43 @@
    {:url "https://github.com/ring-clojure/ring" :name "Ring"}
    {:url "https://affiliate.dmm.com/api/" :name "DMM Webサービス"}])
 
+(def aoba-home-techs
+  [clojurescript-official
+   re-frame-official])
+
+(defn url-link
+  ""
+  [url label & [target]]
+  [:span.url
+   [re-com/hyperlink-href
+    :label label
+    :href url
+    :target (or target "_blank")]])
+
 (def genegacha-desc
-  "aoba17が作成したジェネラティブアートが楽しめるガチャガチャのシミュレーター。ただただガチャを回したい人向け。美少女イラストや課金要素はないです。")
+  "ガチャガチャのシミュレーターとジェネラティブアートのマリアージュ。")
 
 (def dmm-desc
-  "エロサイトです。FANZAのアダルトビデオのサンプル動画が楽しめます。サンプル動画はすべてFANZA提供のアフィリエイト広告なので違法性ゼロ!!")
+  "FANZAのアダルトビデオの無料サンプル動画を漁るときに使われる18禁サイト。")
+
+(def aoba-home-desc
+  [:span "このページ。ソースコードは"
+   [url-link "https://github.com/aoba17/aoba17.github.io" [:span "こちら"]]])
 
 (def work-list
-  [{:title       "ジェネラティブガチャガチャシミュレーター"
-    :url         "https://www.genegacha.com"
-    :description genegacha-desc
-    :techs       genegacha-techs}
+  [{:title       "aoba-home"
+    :url         "#/"
+    :url-target  "_self"
+    :description aoba-home-desc
+    :techs       aoba-home-techs}
    {:title       "出会って4秒でサンプル動画"
     :url         "https://av.genegacha.com"
     :description dmm-desc
-    :techs       dmm-gacha-techs}])
+    :techs       dmm-gacha-techs}
+   {:title       "ジェネラティブガチャガチャシミュレーター"
+    :url         "https://www.genegacha.com"
+    :description genegacha-desc
+    :techs       genegacha-techs}])
 
 (def br
   [:br])
@@ -55,18 +77,9 @@
    :level :level1
    :class "unselectable"])
 
-(defn url-link
-  ""
-  [url label]
-  [:span
-   [re-com/hyperlink-href
-    :label label
-    :href url
-    :target "_blank"]])
-
 (defn work-panel
   ""
-  [name url description techs]
+  [name url url-target description techs]
   [re-com/v-box
    :gap "0.4em"
    :children [[re-com/h-box
@@ -77,7 +90,8 @@
                            url
                            [re-com/title
                             :label name
-                            :level :level3]]]]
+                            :level :level3]
+                           url-target]]]
               [re-com/p {:class "description"}
                description
                br
@@ -105,8 +119,8 @@
   ""
   []
   [:div.contents-box
-   (for [{:keys [title url description techs]} work-list]
-     [work-panel title url description techs])])
+   (for [{:keys [title url url-target description techs]} work-list]
+     [work-panel title url url-target description techs])])
 
 (defn sns-accounts
   ""
@@ -120,18 +134,26 @@
               ;;[:i.fab.fa-youtube.fa-3x]
               ]])
 
+(defn graphics
+  ""
+  []
+  [:div.contents-box
+   [:div "aaaa"]])
+
 (defn home-panel []
   (let [service-fold? (re-frame/subscribe [::subs/any-key :service-fold?])
-        sns-fold?     (re-frame/subscribe [::subs/any-key :sns-fold?])]
+        sns-fold?     (re-frame/subscribe [::subs/any-key :sns-fold?])
+        graphic-fold? (re-frame/subscribe [::subs/any-key :graphick-fold?])]
     [re-com/v-box
      :gap "1em"
      :class "home-panel"
      :children [[home-title]
-                [headline "My work on the Web" service-fold? :service-fold?]
-                (if-not @service-fold? [services])
-                [headline "aoba17 official" sns-fold? :sns-fold?]
-                (if-not @sns-fold? [sns-accounts])]]))
-
+                [headline "ぼくの各種アカウント" sns-fold? :sns-fold?]
+                (if-not @sns-fold? [sns-accounts])
+                ;; [headline "ぼくがつくったグラフィック" graphic-fold? :graphick-fold?]
+                ;; (if-not @graphic-fold? [graphics])
+                [headline "ぼくがつくったWebサービス" service-fold? :service-fold?]
+                (if-not @service-fold? [services])]]))
 
 ;; about
 

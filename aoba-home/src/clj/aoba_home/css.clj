@@ -7,7 +7,7 @@
   [:p {:border-left  "solid"
        :border-color :DarkOrange
        :padding-left "1em"}
-   [:span {:margin-left "0.7em"}]]
+   [:span.url {:margin-left "0.7em"}]]
   [:.home-panel {:margin "1em"}]
   [:.headline {:margin-left "0.5em"}]
   [:.contents-box {:margin-left "3em"}]
