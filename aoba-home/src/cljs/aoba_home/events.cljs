@@ -19,3 +19,13 @@
   ::toggle
   (fn [db [_ flag]]
     (assoc db flag (not (flag db)))))
+
+(re-frame/reg-event-db
+  ::modal-image
+  (fn-traced [db [_ image]]
+             (assoc db :modal-image image)))
+
+(re-frame/reg-event-db
+  ::clear
+  (fn-traced [db [_ key]]
+             (assoc db key nil)))

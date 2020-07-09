@@ -1,11 +1,18 @@
 (ns aoba-home.views
   (:require
+   [reagent.core :as r]
    [re-frame.core :as re-frame]
    [re-com.core :as re-com]
    [aoba-home.subs :as subs]
-   [aoba-home.events :as events]
-   ))
+   [aoba-home.events :as events]))
 
+(defonce window-size
+  (let [a (r/atom {:width  (.-innerWidth js/window)
+                   :height (.-innerHeight js/window)})]
+    (.addEventListener js/window "resize"
+                       (fn [] (reset! a {:width  (.-innerWidth  js/window)
+                                        :height (.-innerHeight js/window)})))
+    a))
 
 ;; home
 
@@ -134,24 +141,68 @@
               ;;[:i.fab.fa-youtube.fa-3x]
               ]])
 
+(def graphic-list
+  [{:src       "images/member-color.png"
+    :thumbnail "images/member-color.png"
+    :title     "Hello! Plot ～メンバーカラー～"
+    :date      "2020"
+    :width     1750
+    :height    1750}])
+
+(defn graphic-modal
+  ""
+  [{:keys [src width height title date]}]
+  [re-com/modal-panel
+   :backdrop-on-click #(re-frame/dispatch [::events/clear :modal-image])
+   :backdrop-color "orange"
+   :child
+   [re-com/v-box
+    :align :center
+    :children
+    [[:img
+      (merge
+        {:src      src
+         :on-click #(re-frame/dispatch [::events/clear :modal-image])}
+        (if (>= (/ width (:width @window-size))
+                (/ height (:height @window-size)))
+          {:width (str (min (* (:width @window-size) 0.9) width) "px")}
+          {:height (str (min (* (:height @window-size) 0.85) height) "px")}))]
+     [re-com/title :label title :level :level3]
+     [re-com/title :label date :level :level4]]]])
+
 (defn graphics
   ""
   []
-  [:div.contents-box
-   [:div "aaaa"]])
+  (let [modal-image (re-frame/subscribe [::subs/any-key :modal-image])]
+    [re-com/h-box
+     :class "contents-box"
+     :height "100px"
+     :children
+     [(for [{:keys [thumbnail] :as g} graphic-list]
+        [re-com/box
+         :height "100px"
+         :child [:div
+                 [:img.thumbnail
+                  {:src      thumbnail
+                   :height   "100px"
+                   :width    "auto"
+                   :on-click #(re-frame/dispatch
+                                [::events/modal-image g])}]]])
+      (when @modal-image
+        [graphic-modal @modal-image])]]))
 
 (defn home-panel []
   (let [service-fold? (re-frame/subscribe [::subs/any-key :service-fold?])
         sns-fold?     (re-frame/subscribe [::subs/any-key :sns-fold?])
-        graphic-fold? (re-frame/subscribe [::subs/any-key :graphick-fold?])]
+        graphic-fold? (re-frame/subscribe [::subs/any-key :graphic-fold?])]
     [re-com/v-box
      :gap "1em"
      :class "home-panel"
      :children [[home-title]
                 [headline "ぼくの各種アカウント" sns-fold? :sns-fold?]
                 (if-not @sns-fold? [sns-accounts])
-                ;; [headline "ぼくがつくったグラフィック" graphic-fold? :graphick-fold?]
-                ;; (if-not @graphic-fold? [graphics])
+                [headline "ぼくがつくったグラフィック" graphic-fold? :graphic-fold?]
+                (if-not @graphic-fold? [graphics])
                 [headline "ぼくがつくったWebサービス" service-fold? :service-fold?]
                 (if-not @service-fold? [services])]]))
 
@@ -185,5 +236,6 @@
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
     [re-com/v-box
+     :width "600px"
      :height "100%"
      :children [[panels @active-panel]]]))

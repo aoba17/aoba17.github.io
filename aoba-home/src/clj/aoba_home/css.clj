@@ -10,7 +10,8 @@
    [:span.url {:margin-left "0.7em"}]]
   [:.home-panel {:margin "1em"}]
   [:.headline {:margin-left "0.5em"}]
-  [:.contents-box {:margin-left "3em"}]
+  [:.contents-box {:margin-left "3em"
+                   :flex-wrap   "wrap !important"}]
   [:.description {:margin-left "0.5em"}]
   [:.unselectable {:user-select "none"}
    [:i {:padding-top  "8px"
@@ -24,4 +25,6 @@
   [:i.fas.fa-circle :i.fas.fa-circle:hover
    {:margin-top  "3.7px"
     :margin-left "2px"
-    :color       :YellowGreen}])
+    :color       :YellowGreen}]
+  [:img.thumbnail {:padding "0.2em"
+                   :margin "0.2em"}])
