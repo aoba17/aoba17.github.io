@@ -143,7 +143,7 @@
 
 (def graphic-list
   [{:src       "images/member-color.png"
-    :thumbnail "images/member-color.png"
+    :thumbnail "images/member-color_tn.jpg"
     :title     "Hello! Plot ～メンバーカラー～"
     :date      "2020"
     :width     1750
@@ -176,15 +176,15 @@
   (let [modal-image (re-frame/subscribe [::subs/any-key :modal-image])]
     [re-com/h-box
      :class "contents-box"
-     :height "100px"
+     :height "96px"
      :children
      [(for [{:keys [thumbnail] :as g} graphic-list]
         [re-com/box
-         :height "100px"
+         :height "96px"
          :child [:div
                  [:img.thumbnail
                   {:src      thumbnail
-                   :height   "100px"
+                   :height   "96px"
                    :width    "auto"
                    :on-click #(re-frame/dispatch
                                 [::events/modal-image g])}]]])

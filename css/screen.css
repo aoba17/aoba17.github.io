@@ -26,6 +26,7 @@ p span.url {
 
 .contents-box {
   margin-left: 3em;
+  flex-wrap: wrap !important;
 }
 
 .description {
@@ -62,4 +63,9 @@ i.fas.fa-circle, i.fas.fa-circle:hover {
   margin-top: 3.7px;
   margin-left: 2px;
   color: YellowGreen;
+}
+
+img.thumbnail {
+  padding: 0.2em;
+  margin: 0.2em;
 }
