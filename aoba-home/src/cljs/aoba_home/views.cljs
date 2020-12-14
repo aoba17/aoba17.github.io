@@ -30,12 +30,10 @@
    re-frame-official
    {:url "http://quil.info/" :name "Quil"}])
 
-(def dmm-gacha-techs
+(def hello-plot-techs
   [clojure-official
    clojurescript-official
-   re-frame-official
-   {:url "https://github.com/ring-clojure/ring" :name "Ring"}
-   {:url "https://affiliate.dmm.com/api/" :name "DMM Webサービス"}])
+   re-frame-official])
 
 (def aoba-home-techs
   [clojurescript-official
@@ -50,15 +48,15 @@
     :href url
     :target (or target "_blank")]])
 
+(def aoba-home-desc
+  [:span "このページ。ポートフォリオ。ソースコードは"
+   [url-link "https://github.com/aoba17/aoba17.github.io" [:span "こちら"]]])
+
+(def hello-plot-desc
+  "ハロプロメンバーに関するデータのビジュアライゼーションサービス")
+
 (def genegacha-desc
   "ガチャガチャのシミュレーターとジェネラティブアートのマリアージュ。")
-
-(def dmm-desc
-  "FANZAのアダルトビデオの無料サンプル動画を漁るときに使われる18禁サイト。")
-
-(def aoba-home-desc
-  [:span "このページ。ソースコードは"
-   [url-link "https://github.com/aoba17/aoba17.github.io" [:span "こちら"]]])
 
 (def work-list
   [{:title       "aoba-home"
@@ -66,10 +64,10 @@
     :url-target  "_self"
     :description aoba-home-desc
     :techs       aoba-home-techs}
-   {:title       "出会って4秒でサンプル動画"
-    :url         "https://av.genegacha.com"
-    :description dmm-desc
-    :techs       dmm-gacha-techs}
+   {:title       "Hello Plot"
+    :url         "https://www.genegacha.com"
+    :description hello-plot-desc
+    :techs       hello-plot-techs}
    {:title       "ジェネラティブガチャガチャシミュレーター"
     :url         "https://www.genegacha.com"
     :description genegacha-desc
