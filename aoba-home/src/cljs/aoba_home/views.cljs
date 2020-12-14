@@ -79,10 +79,16 @@
   [:br])
 
 (defn home-title []
-  [re-com/title
-   :label "aoba17"
-   :level :level1
-   :class "unselectable"])
+  [re-com/h-box
+   :children [[re-com/title
+               :label [:div
+                       "aoba17"
+                       [url-link
+                        "https://github.com/aoba17"
+                        [:i.fab.fa-github]]]
+               :level :level1
+               :class "unselectable"]
+              ]])
 
 (defn work-panel
   ""
@@ -129,18 +135,6 @@
    (for [{:keys [title url url-target description techs]} work-list]
      [work-panel title url url-target description techs])])
 
-(defn sns-accounts
-  ""
-  []
-  [re-com/h-box
-   :class "contents-box"
-   :gap "0.5em"
-   :children [[url-link "https://twitter.com/takafumi_oy" [:i.fab.fa-twitter.fa-3x]]
-              [url-link "https://github.com/aoba17" [:i.fab.fa-github.fa-3x]]
-              [url-link "https://www.instagram.com/dope_oyakata/" [:i.fab.fa-instagram.fa-3x]]
-              ;;[:i.fab.fa-youtube.fa-3x]
-              ]])
-
 (def graphic-list
   [{:src       "images/member-color.png"
     :thumbnail "images/member-color_tn.jpg"
@@ -170,9 +164,7 @@
      [re-com/title :label title :level :level3]
      [re-com/title :label date :level :level4]]]])
 
-(defn graphics
-  ""
-  []
+(defn graphics []
   (let [modal-image (re-frame/subscribe [::subs/any-key :modal-image])]
     [re-com/h-box
      :class "contents-box"
@@ -191,20 +183,23 @@
       (when @modal-image
         [graphic-modal @modal-image])]]))
 
+(defn other []
+  [:p "そのた"])
+
 (defn home-panel []
   (let [service-fold? (re-frame/subscribe [::subs/any-key :service-fold?])
-        sns-fold?     (re-frame/subscribe [::subs/any-key :sns-fold?])
+        other-fold?   (re-frame/subscribe [::subs/any-key :other-fold?])
         graphic-fold? (re-frame/subscribe [::subs/any-key :graphic-fold?])]
     [re-com/v-box
      :gap "1em"
      :class "home-panel"
      :children [[home-title]
-                [headline "ぼくの各種アカウント" sns-fold? :sns-fold?]
-                (if-not @sns-fold? [sns-accounts])
-                [headline "ぼくがつくったグラフィック" graphic-fold? :graphic-fold?]
+                [headline "つくったWebサービス" service-fold? :service-fold?]
+                (if-not @service-fold? [services])
+                [headline "つくったグラフィック" graphic-fold? :graphic-fold?]
                 (if-not @graphic-fold? [graphics])
-                [headline "ぼくがつくったWebサービス" service-fold? :service-fold?]
-                (if-not @service-fold? [services])]]))
+                [headline "その他" other-fold? :other-fold?]
+                (if-not @graphic-fold? [other])]]))
 
 ;; about
 
