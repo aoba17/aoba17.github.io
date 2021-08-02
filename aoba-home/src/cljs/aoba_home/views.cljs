@@ -80,7 +80,7 @@
   [re-com/h-box
    :children [[re-com/title
                :label [:div
-                       "aoba17"
+                       "小山貴史"
                        [url-link
                         "https://github.com/aoba17"
                         [:i.fab.fa-github]]]
