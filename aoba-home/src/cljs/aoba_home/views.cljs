@@ -133,71 +133,69 @@
    (for [{:keys [title url url-target description techs]} work-list]
      [work-panel title url url-target description techs])])
 
-(def graphic-list
-  [{:src       "images/member-color.png"
-    :thumbnail "images/member-color_tn.jpg"
-    :title     "Hello! Plot ～メンバーカラー～"
-    :date      "2020"
-    :width     1750
-    :height    1750}])
-
-(defn graphic-modal
-  ""
-  [{:keys [src width height title date]}]
-  [re-com/modal-panel
-   :backdrop-on-click #(re-frame/dispatch [::events/clear :modal-image])
-   :backdrop-color "orange"
-   :child
-   [re-com/v-box
-    :align :center
-    :children
-    [[:img
-      (merge
-        {:src      src
-         :on-click #(re-frame/dispatch [::events/clear :modal-image])}
-        (if (>= (/ width (:width @window-size))
-                (/ height (:height @window-size)))
-          {:width (str (min (* (:width @window-size) 0.9) width) "px")}
-          {:height (str (min (* (:height @window-size) 0.85) height) "px")}))]
-     [re-com/title :label title :level :level3]
-     [re-com/title :label date :level :level4]]]])
-
-(defn graphics []
-  (let [modal-image (re-frame/subscribe [::subs/any-key :modal-image])]
-    [re-com/h-box
-     :class "contents-box"
-     :height "96px"
-     :children
-     [(for [{:keys [thumbnail] :as g} graphic-list]
-        [re-com/box
-         :height "96px"
-         :child [:div
-                 [:img.thumbnail
-                  {:src      thumbnail
-                   :height   "96px"
-                   :width    "auto"
-                   :on-click #(re-frame/dispatch
-                                [::events/modal-image g])}]]])
-      (when @modal-image
-        [graphic-modal @modal-image])]]))
-
-(defn other []
+(defn environment []
   [:p "そのた"])
 
+;; (def graphic-list
+;;   [{:src       "images/member-color.png"
+;;     :thumbnail "images/member-color_tn.jpg"
+;;     :title     "Hello! Plot ～メンバーカラー～"
+;;     :date      "2020"
+;;     :width     1750
+;;     :height    1750}])
+
+;; (defn graphic-modal
+;;   ""
+;;   [{:keys [src width height title date]}]
+;;   [re-com/modal-panel
+;;    :backdrop-on-click #(re-frame/dispatch [::events/clear :modal-image])
+;;    :backdrop-color "orange"
+;;    :child
+;;    [re-com/v-box
+;;     :align :center
+;;     :children
+;;     [[:img
+;;       (merge
+;;         {:src      src
+;;          :on-click #(re-frame/dispatch [::events/clear :modal-image])}
+;;         (if (>= (/ width (:width @window-size))
+;;                 (/ height (:height @window-size)))
+;;           {:width (str (min (* (:width @window-size) 0.9) width) "px")}
+;;           {:height (str (min (* (:height @window-size) 0.85) height) "px")}))]
+;;      [re-com/title :label title :level :level3]
+;;      [re-com/title :label date :level :level4]]]])
+
+;; (defn graphics []
+;;   (let [modal-image (re-frame/subscribe [::subs/any-key :modal-image])]
+;;     [re-com/h-box
+;;      :class "contents-box"
+;;      :height "96px"
+;;      :children
+;;      [(for [{:keys [thumbnail] :as g} graphic-list]
+;;         [re-com/box
+;;          :height "96px"
+;;          :child [:div
+;;                  [:img.thumbnail
+;;                   {:src      thumbnail
+;;                    :height   "96px"
+;;                    :width    "auto"
+;;                    :on-click #(re-frame/dispatch
+;;                                 [::events/modal-image g])}]]])
+;;       (when @modal-image
+;;         [graphic-modal @modal-image])]]))
+
 (defn home-panel []
-  (let [service-fold? (re-frame/subscribe [::subs/any-key :service-fold?])
-        other-fold?   (re-frame/subscribe [::subs/any-key :other-fold?])
-        graphic-fold? (re-frame/subscribe [::subs/any-key :graphic-fold?])]
+  (let [service-fold?     (re-frame/subscribe [::subs/any-key :service-fold?])
+        ;;graphic-fold? (re-frame/subscribe [::subs/any-key :graphic-fold?])
+        environment-fold? (re-frame/subscribe [::subs/any-key :environment-fold?])]
     [re-com/v-box
      :gap "1em"
      :class "home-panel"
      :children [[home-title]
-                [headline "つくったWebサービス" service-fold? :service-fold?]
+                [headline "つくったもの" service-fold? :service-fold?]
                 (if-not @service-fold? [services])
-                [headline "つくったグラフィック" graphic-fold? :graphic-fold?]
-                (if-not @graphic-fold? [graphics])
-                [headline "その他" other-fold? :other-fold?]
-                (if-not @graphic-fold? [other])]]))
+                [headline "開発環境" environment-fold? :environment-fold?]
+                (if-not @environment-fold? [environment])]]))
 
 ;; about
 
