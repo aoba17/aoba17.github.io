@@ -25,15 +25,17 @@
 (def re-frame-official
   {:url "https://day8.github.io/re-frame/" :name "re-frame"})
 
+(def quil-official
+  {:url "http://quil.info/" :name "Quil"})
+
 (def genegacha-techs
   [clojurescript-official
    re-frame-official
-   {:url "http://quil.info/" :name "Quil"}])
+   quil-official])
 
-(def hello-plot-techs
+(def generative-design-techs
   [clojure-official
-   clojurescript-official
-   re-frame-official])
+   quil-official])
 
 (def aoba-home-techs
   [clojurescript-official
@@ -49,25 +51,28 @@
     :target (or target "_blank")]])
 
 (def aoba-home-desc
-  [:span "このページ。ポートフォリオ。ソースコードは"
-   [url-link "https://github.com/aoba17/aoba17.github.io" [:span "こちら"]]])
+  [:span "このページ。"
+   [url-link "https://github.com/aoba17/aoba17.github.io" [:span "ソースコード"]]])
 
-(def hello-plot-desc
-  "ハロプロメンバーに関するデータのビジュアライゼーションサービス")
+(def generative-design-desc
+  "『Generative Design』のサンプルコードのClojure版。")
 
 (def genegacha-desc
-  "ガチャガチャのシミュレーターとジェネラティブアートのマリアージュ。")
+  [:span
+   "re-frame習得のために作成。"
+   [url-link "https://github.com/ring-clojure/ring" [:span "ring"]]
+   "などを使用して作成していたWebアプリケーションを書き換えてSPA化した。その名の通りガチャガチャのシミュレーター。"])
 
 (def work-list
-  [{:title       "aoba-home"
+  [{:title       "ポートフォリオ"
     :url         "#/"
     :url-target  "_self"
     :description aoba-home-desc
     :techs       aoba-home-techs}
-   {:title       "Hello Plot"
-    :url         "https://www.genegacha.com"
-    :description hello-plot-desc
-    :techs       hello-plot-techs}
+   {:title       "generative-design-clojure"
+    :url         "https://github.com/aoba17/generative-design-clojure"
+    :description generative-design-desc
+    :techs       generative-design-techs}
    {:title       "ジェネラティブガチャガチャシミュレーター"
     :url         "https://www.genegacha.com"
     :description genegacha-desc
@@ -134,7 +139,28 @@
      [work-panel title url url-target description techs])])
 
 (defn environment []
-  [:p "そのた"])
+  [:div.contents-box
+   [re-com/v-box
+    :gap "0.4em"
+    :children [[re-com/h-box
+                :align :center
+                :gap "3px"
+                :children [[:i.fas.fa-circle]
+                           [re-com/title
+                            :label "Machine"
+                            :level :level3]]]
+               [re-com/p {:class "description"}
+                "個人開発では MacBook Air を使用中。"]
+               [re-com/h-box
+                :align :center
+                :gap "3px"
+                :children [[:i.fas.fa-circle]
+                           [re-com/title
+                            :label "Text Editer"
+                            :level :level3]]]
+               [re-com/p {:class "description"}
+                "CiderやClojure LSPなどのClojure開発用パッケージを導入したSpacemacs (develop branch) を使用。"]
+               ]]])
 
 ;; (def graphic-list
 ;;   [{:src       "images/member-color.png"
