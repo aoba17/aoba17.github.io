@@ -138,29 +138,33 @@
    (for [{:keys [title url url-target description techs]} work-list]
      [work-panel title url url-target description techs])])
 
+(defn env-panel [label desc]
+  [re-com/v-box
+   :gap "0.4em"
+   :children[[re-com/h-box
+              :align :center
+              :gap "3px"
+              :children [[:i.fas.fa-circle]
+                         [re-com/title
+                          :label label
+                          :level :level3]]]
+             [re-com/p {:class "description"}
+              desc]]])
+
 (defn environment []
   [:div.contents-box
-   [re-com/v-box
-    :gap "0.4em"
-    :children [[re-com/h-box
-                :align :center
-                :gap "3px"
-                :children [[:i.fas.fa-circle]
-                           [re-com/title
-                            :label "Machine"
-                            :level :level3]]]
-               [re-com/p {:class "description"}
-                "個人開発では MacBook Air を使用中。"]
-               [re-com/h-box
-                :align :center
-                :gap "3px"
-                :children [[:i.fas.fa-circle]
-                           [re-com/title
-                            :label "Text Editer"
-                            :level :level3]]]
-               [re-com/p {:class "description"}
-                "CiderやClojure LSPなどのClojure開発用パッケージを導入したSpacemacs (develop branch) を使用。"]
-               ]]])
+   [env-panel
+    "Machine"
+    "個人開発では MacBook Air を使用中。"]
+   [env-panel
+    "Text Editer"
+    "CiderやClojure LSPなどのClojure開発用パッケージを導入したSpacemacs (develop branch) を使用。"]
+   [env-panel
+    "Infrastructure"
+    "自作アプリ公開のためのWebサーバーやCDN、ドメイン管理にAWSを使用。アプリのサーバーへのデプロイに構成管理ツールAnsibleを使用。"]
+   [env-panel
+    "Clojure Project"
+    "主にlainingenのテンプレートプロジェクトから開発を始める事が多い。デプロイの際もlainingenを用いてプロジェクトをjarファイルに変換。"]])
 
 ;; (def graphic-list
 ;;   [{:src       "images/member-color.png"
