@@ -164,7 +164,7 @@
     "自作アプリ公開のためのWebサーバーやCDN、ドメイン管理にAWSを使用。アプリのサーバーへのデプロイに構成管理ツールAnsibleを使用。"]
    [env-panel
     "Clojure Project"
-    "主にlainingenのテンプレートプロジェクトから開発を始める事が多い。デプロイの際もlainingenを用いてプロジェクトをjarファイルに変換。"]])
+    "主にleiningenのテンプレートプロジェクトから開発を始める事が多い。デプロイの際もleiningenを用いてプロジェクトをjarファイルに変換。"]])
 
 ;; (def graphic-list
 ;;   [{:src       "images/member-color.png"
