@@ -28,6 +28,12 @@
 (def quil-official
   {:url "http://quil.info/" :name "Quil"})
 
+(def graphql-official
+  {:url "https://graphql.org/" :name "GraphQL"})
+
+(def postgresql-official
+  {:url "https://www.postgresql.org/" :name "PostgreSQL"})
+
 (def genegacha-techs
   [clojurescript-official
    re-frame-official
@@ -40,6 +46,11 @@
 (def aoba-home-techs
   [clojurescript-official
    re-frame-official])
+
+(def other-techs
+  [clojure-official
+   graphql-official
+   postgresql-official])
 
 (defn url-link
   ""
@@ -63,6 +74,9 @@
    [url-link "https://github.com/ring-clojure/ring" [:span "ring"]]
    "などを使用して作成していたWebアプリケーションを書き換えてSPA化した。その名の通りガチャガチャのシミュレーター。"])
 
+(def other-desc
+  "githubにてその他の作成途中のソースコードも公開。")
+
 (def work-list
   [{:title       "ポートフォリオ"
     :url         "#/"
@@ -76,7 +90,11 @@
    {:title       "ジェネラティブガチャガチャシミュレーター"
     :url         "https://www.genegacha.com"
     :description genegacha-desc
-    :techs       genegacha-techs}])
+    :techs       genegacha-techs}
+   {:title       "その他"
+    :url         "https://github.com/aoba17"
+    :description other-desc
+    :techs       other-techs}])
 
 (def br
   [:br])
